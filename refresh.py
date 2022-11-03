@@ -1,6 +1,6 @@
-from secrets import refresh_token, base_64
 import requests
 import json
+from secrets import refresh_token, base_64
 
 class Refresh:
 
@@ -18,6 +18,9 @@ class Refresh:
             } , headers = {
                 "Authorization": "Basic " + base_64})
 
-    print(response.json())
+        response_json = response.json()
+
+        return response_json["access_token"]
+
 a = Refresh()
 a.refresh()

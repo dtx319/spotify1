@@ -1,12 +1,13 @@
 import json
 import requests
-from secrets import spotify_user_id, spotify_token, discover_weekly_id
+from secrets import spotify_user_id, discover_weekly_id
 from datetime import date
+from refresh import Refresh
 
 class SaveSongs: 
     def __init__(self): 
         self.user_id = spotify_user_id
-        self.spotify_token = spotify_token
+        self.spotify_token = ''
         self.discover_weekly_id = discover_weekly_id
         self.tracks = ''
         self.new_playlist_id = ''
@@ -21,7 +22,7 @@ class SaveSongs:
         
         response = requests.get(query,
             headers={"Content-Type": "application/json",
-            "Authorization": "Bearer {}".format(spotify_token)
+            "Authorization": "Bearer {}".format(self.spotify_token)
         })
 
         response_json = response.json()
@@ -36,6 +37,7 @@ class SaveSongs:
     
     def create_playlist(self):
         #Create a new playlist
+        print("Trying to create playlist...")
         today = date.today()
 
         today_formatted = today.strftime("%m/%d/%Y")
@@ -49,7 +51,7 @@ class SaveSongs:
 
         response = requests.post(query, data=request_body, headers={
             "Content-Type": "application/json",
-            "Authorization": "Bearer {}".format(spotify_token)
+            "Authorization": "Bearer {}".format(self.spotify_token)
         })
 
         response_json = response.json()
@@ -67,12 +69,21 @@ class SaveSongs:
 
         response = requests.post(query, headers={
             "Content-Type": "application/json",
-            "Authorization": "Bearer {}".format(spotify_token)
+            "Authorization": "Bearer {}".format(self.spotify_token)
         })
 
         print(response.json)
 
+    def call_refresh(self):
+        print("Refreshing token")
+        
+        refreshCaller = Refresh()
+
+        self.spotify_token = refreshCaller.refresh()
+
+        self.find_songs()
+
 a = SaveSongs()
-a.find_songs()
+a.call_refresh()
 
         
