@@ -22,5 +22,6 @@ class Refresh:
 
         return response_json["access_token"]
 
+
 a = Refresh()
 a.refresh()
