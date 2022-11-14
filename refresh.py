@@ -15,8 +15,7 @@ class Refresh:
             data = {
                 "grant_type":"refresh_token",
                 "refresh_token": refresh_token
-            } , headers = {
-                "Authorization": "Basic " + base_64})
+            } , headers = {"Authorization": "Basic " + base_64})
 
         response_json = response.json()
 
