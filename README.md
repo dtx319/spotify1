@@ -1,1 +1,1 @@
-Hello! Enjoy this Spotify tool that saves the tracks from your weekly explore list.
+Hello! Enjoy this Spotify tool that automatically saves the tracks from your weekly explore list. 
